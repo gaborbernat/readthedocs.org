@@ -5,6 +5,8 @@ from __future__ import (
     absolute_import, division, print_function, unicode_literals)
 
 import logging
+
+from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 import os.path
 import re
 from builtins import object
@@ -21,7 +23,7 @@ from taggit.managers import TaggableManager
 
 from readthedocs.core.utils import broadcast
 from readthedocs.projects.constants import (
-    BITBUCKET_URL, GITHUB_URL, GITLAB_URL, PRIVACY_CHOICES, PRIVATE)
+    BITBUCKET_URL, GITLAB_URL, PRIVACY_CHOICES, PRIVATE)
 from readthedocs.projects.models import APIProject, Project
 
 from .constants import (
@@ -36,6 +38,8 @@ from .version_slug import VersionSlugField
 
 DEFAULT_VERSION_PRIVACY_LEVEL = getattr(
     settings, 'DEFAULT_VERSION_PRIVACY_LEVEL', 'public')
+ARGS = '/{user}/{repo}/{action}/{version}{docroot}{path}{source_suffix}'
+GITHUB_URL = GitHubOAuth2Adapter.web_url + ARGS
 
 log = logging.getLogger(__name__)
 
